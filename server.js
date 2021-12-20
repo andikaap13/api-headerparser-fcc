@@ -26,12 +26,14 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/whoami", function (req, res) {
-  var ip = '';
+  var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+  var lang = req.headers["accept-language"];
+  var software = req.headers['user-agent'];
 
   res.json({
-    ipaddress: 'hello API',
-    language: '',
-    software: ''
+    ipaddress: ip,
+    language: lang,
+    software: software
   });
 });
 
